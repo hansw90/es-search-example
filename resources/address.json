@@ -1,0 +1,139 @@
+{
+  "mappings" : {
+    "properties" : {
+      "id" : {
+        "type" : "text",
+        "fields" : {
+          "keyword" : {
+            "type" : "keyword",
+            "ignore_above" : 256
+          }
+        }
+      },
+      "sido_name" : {
+        "type" : "text"
+      },
+      "gu_name" : {
+        "type" : "text"
+      },
+      "dong_name" : {
+        "type" : "text",
+        "fields" : {
+          "keyword" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "road_name" : {
+        "type" : "text",
+        "fields" : {
+          "keyword" : {
+            "type" : "keyword"
+          }
+        }
+      },
+      "li_name" : {
+        "type" : "text"
+      },
+      "location" : {
+        "type" : "geo_point"
+      },
+      "lot_number_address" : {
+        "type" : "text"
+      },
+      "road_number_address" : {
+        "type" : "text"
+      },
+      "phone_numbers" : {
+        "type" : "text"
+      },
+      "pnu_code" : {
+        "type" : "long"
+      },
+      "name" : {
+        "type" : "text",
+        "analyzer" : "nori_mixed",
+        "copy_to": ["name_jamo", "name_chosung"]
+      },
+      "name_jamo": {
+        "type": "text",
+        "analyzer": "jamo_analyzer",
+        "search_analyzer": "jamo_srch_analyzer"
+      },
+      "name_chosung": {
+        "type": "text",
+        "analyzer": "chosung_analyzer",
+        "search_analyzer": "chosung_srch_analyzer"
+      }
+    }
+  },
+  "settings" : {
+    "index" : {
+      "analysis" : {
+        "filter" : {
+          "my_shingle" : {
+            "max_shingle_size" : "4",
+            "token_separator" : "",
+            "type" : "shingle"
+          },
+          "synonyms" : {
+            "expand" : "true",
+            "type" : "synonym",
+            "synonyms_path" : "dictionary/address_synonyms.txt",
+            "lenient" : "true"
+          },
+          "jamo_split": {
+          "type": "aift-chosung-plugin"
+          },
+          "chosung_split": {
+            "type": "aift-chosung-plugin",
+            "parserType": "chosung"
+          },
+          "edge100Gram": {
+            "type": "edgeNGram",
+            "min_gram": 1,
+            "max_gram": 100,
+            "side": "front"
+          }
+        },
+        "analyzer" : {
+          "nori_mixed" : {
+            "filter" : [
+              "synonyms",
+              "my_shingle"
+            ],
+            "tokenizer" : "nori_t_mixed"
+          },
+          "jamo_analyzer": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": ["jamo_split", "edge100Gram", "lowercase"]
+          },
+          "chosung_analyzer": {
+            "type": "custom",
+            "tokenizer": "keyword",
+            "filter": ["chosung_split", "edge100Gram", "lowercase"]
+          },
+          "jamo_srch_analyzer": {
+            "type": "custom",
+            "tokenizer": "keyword",
+            "filter": ["jamo_split", "lowercase"]
+          },
+          "chosung_srch_analyzer": {
+            "type": "custom",
+            "tokenizer": "keyword",
+            "filter": ["lowercase"]
+          }
+        },
+        "tokenizer" : {
+          "nori_t_mixed" : {
+            "type" : "nori_tokenizer",
+            "user_dictionary" : "dictionary/address.txt",
+            "decompound_mode" : "mixed"
+          }
+        }
+      }
+    }
+  }
+
+}
