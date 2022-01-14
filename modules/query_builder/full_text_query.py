@@ -46,13 +46,15 @@ class FullTextQuery():
             self.query[_match_all][_boost] = boost
         return self.query
 
+
     def match(self, field, search, analyzer=None, boost=None, fuzziness=None, operator=None, minimum_should_match=None
                         , zero_terms_query=None, cutoff_frequency=None, rewrite=None, prefix_length=None, max_expansions=None):
         """
-        match query 생성.
-        가장 기본적인 search로 text, number, date, boolean을 사용할 수 있다. text를 검색전 analyzer한다.
-        fuzzy matching 을 지원한다. (이게 한글에 초성 중성 종성에는 완벽하지는 않음)
+       전체 텍스트 쿼리를 수행하기 위한 기본 쿼리 (fuzzy 매치와 phrase, 근접 쿼리를 포함) 
+       쉽게 말해 전체 텍스트에서 특정 부분이 포함되는지 여부를 확인하는데 
+       fuzzy를 이용하여 유사도가 어느정도 되는 쿼리들도 조회 가능
         """
+
         self.query[_query][_match] = dict()
         self.query[_query][_match][field] = dict()
         self.query[_query][_match][field][_query] = search
@@ -76,10 +78,9 @@ class FullTextQuery():
 
     def match_phrase(self, field, search, analyzer=None, boost=None, max_expansions=None, slop=None, zero_terms_query=None):
         """
-        match_phrase query
         입력을 analyze 한다. 그리고 다음의 조건을 충족하는 document를 반환한다.
-        모든 term들이 field에 존재해야 한다. 
-        모든 term들이 입력된 순서에 맞게 존재한다. 
+        - 모든 term들이 field에 존재해야 한다. 
+        - 모든 term들이 입력된 순서에 맞게 존재한다. 
         """
         self.query[_match_phrase] = dict()
         self.query[_match_phrase][field][_query] = search
@@ -103,6 +104,9 @@ class FullTextQuery():
 
 
     def match_phrase_prefix(self, field, search, analyzer=None, boost=None, max_expansions=None, slop=None, zero_terms_query=None):
+        """
+        match phrase 와 비슷하지만 마지막 단어에 와일드 카드가 사용된다. (자동완성 기능에서 자주 사용)
+        """
         self.query[_match_phrase_prefix] = dict()
         self.query[_match_phrase_prefix][field][_query] = search
 
@@ -158,8 +162,16 @@ class FullTextQuery():
 
     def multi_match(self, fields:list(), search, operator=None, zero_term_query=None, cutoff_frequency=None, boost=None, rewrite=None,
                                 prefix_length=None, fuzziness=None, minimum_should_match=None, analyzer=None, max_expansions=None):
+        """
+        match 쿼리의 다중 필드 버전
+        """
         pass
 
-
+    def common(self):
+        """
+        - Document에서 자주 사용되는 단어를 제외하고, 의미있는 단어만 검색하기 위해서 사용하는 쿼리
+        - cutoff_frequency 옵션을 사용하여, 특정 빈도 보다 많은 단어를 제외하고 검색할 수 있다.
+        """
+        pass
 
     
