@@ -46,15 +46,6 @@ class FullTextQuery():
             self.query[_match_all][_boost] = boost
         return self.query
 
-    # match query 생성
-    # match short request
-    # def match(self, field, search):
-    #     self.query[_match] = dict()
-    #     self.query[_match][field] = search
-
-    #     return self.query
-
-    
     def match(self, field, search, analyzer=None, boost=None, fuzziness=None, operator=None, minimum_should_match=None
                         , zero_terms_query=None, cutoff_frequency=None, rewrite=None, prefix_length=None, max_expansions=None):
         """
@@ -83,14 +74,6 @@ class FullTextQuery():
 
         return self.query    
 
-
-    # match_phrase simple query
-    # def match_phrase(self, field, search):
-    #     self.query[_match_phrase] = dict()
-    #     self.query[_match_phrase][field] = search
-
-    #     return self.query
-
     def match_phrase(self, field, search, analyzer=None, boost=None, max_expansions=None, slop=None, zero_terms_query=None):
         """
         match_phrase query
@@ -118,13 +101,7 @@ class FullTextQuery():
 
         return self.query
 
-    # # match_phrase_prefix
-    # def match_phrase_prefix(self, field, search):
-    #     self.query[_match_phrase_prefix] = dict()
-    #     self.query[_match_phrase_prefix][field] = search
-    #     return self.query
 
-    # 입력값을 하나의 뭉텅이로 검색한다.
     def match_phrase_prefix(self, field, search, analyzer=None, boost=None, max_expansions=None, slop=None, zero_terms_query=None):
         self.query[_match_phrase_prefix] = dict()
         self.query[_match_phrase_prefix][field][_query] = search
