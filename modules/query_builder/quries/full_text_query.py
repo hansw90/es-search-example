@@ -31,9 +31,10 @@ _prefix_length = 'prefix_length'
 
 class FullTextQuery():
 
+    query = dict()
+
     def __init__(self):
         self.query = dict()
-        self.query[_query] = dict()
 
     def parse_json(self, query):
         return json.dump(query)
@@ -55,24 +56,24 @@ class FullTextQuery():
        fuzzy를 이용하여 유사도가 어느정도 되는 쿼리들도 조회 가능
         """
 
-        self.query[_query][_match] = dict()
-        self.query[_query][_match][field] = dict()
-        self.query[_query][_match][field][_query] = search
+        self.query[_match] = dict()
+        self.query[_match][field] = dict()
+        self.query[_match][field][_query] = search
 
         if analyzer != None:
-            self.query[_query][_match][field][_analyzer] = analyzer
+            self.query[_match][field][_analyzer] = analyzer
         
         if boost != None:
-            self.query[_query][_match][field][_boost] = boost
+            self.query[_match][field][_boost] = boost
 
         if fuzziness != None:
-            self.query[_query][_match][field][_fuzziness] = fuzziness
+            self.query[_match][field][_fuzziness] = fuzziness
 
         if operator != None:
-            self.query[_query][_match][field][_operator] = operator
+            self.query[_match][field][_operator] = operator
         
         if minimum_should_match != None:
-            self.query[_query][_match][field][_minimum_should_match]=minimum_should_match
+            self.query[_match][field][_minimum_should_match]=minimum_should_match
 
         return self.query    
 
@@ -169,8 +170,9 @@ class FullTextQuery():
 
     def common(self):
         """
-        - Document에서 자주 사용되는 단어를 제외하고, 의미있는 단어만 검색하기 위해서 사용하는 쿼리
-        - cutoff_frequency 옵션을 사용하여, 특정 빈도 보다 많은 단어를 제외하고 검색할 수 있다.
+        Deprecated 7.3
+        Document 에서 자주 사용되는 단어를 제외하고, 의미있는 단어만 검색하기 위해서 사용하는 쿼리
+        cutoff_frequency 옵션을 사용하여, 특정 빈도 보다 많은 단어를 제외하고 검색할 수 있다.
         """
         pass
 
