@@ -96,9 +96,56 @@ class FunctionScoreQuery(object):
     용어나 필드를 부스팅하여 스코어를 조정하는데는 한계가 있다.
     좀더 유연하게 스코어링을 조절하기 위해 function_score 쿼리를 사용한다.
     """
+    
     def __init__(self):
         self._query = dict()
         self._query["function_score"] = dict()
+        self._query["function_score"]['functions'] = []
+
+    def query(self, quries):
+        self._query["fucntion_score"]["query"] = quries
+        return self
+
+    def boost(self, values):
+        self._query["function_score"]["boost"] = values
+        return self
+    
+    def functions(self, functions):
+        self._query["function_score"]['functions'].extend(functions)
+
+    def function(self, filter, script_score=None, weigth=None, random_score=None, field_value_factor=None, decay_functions=None):
+        q = dict()
+        q["filter"] = filter
+        
+        if script_score != None:
+            pass
+    
+
+        return q
+
+    
+    def max_boost(self, values):
+        self._query["function_score"]["max_boost"] = values
+        return self
+
+    # 계산된 스코의 결합 방법을 지정한다.
+    # (multiply), sum, avg, first, max, min
+    def score_mode(self, values):
+        self._query["function_score"]["score_mode"] = values
+        return self
+
+    def boost_mode(self, values):
+        self._query["function_score"]["boost_mode"] = values
+        return self
+
+    def min_score(self, values):
+        self._query["function_score"]["min_score"] = values
+        return self
+
+    def build(self):
+        return self._query
+
+    
 
 def dis_max(self):
     pass
