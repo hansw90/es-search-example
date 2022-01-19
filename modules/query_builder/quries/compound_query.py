@@ -169,7 +169,3 @@ class FunctionScoreQuery(object):
     def build(self):
         return self._query
 
-    
-
-def dis_max(self):
-    pass

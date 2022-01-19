@@ -27,7 +27,11 @@ _slop = 'slop'
 _zero_terms_query = 'zero_terms_query'
 _value = 'value'
 _prefix_length = 'prefix_length'
-
+_fields = 'fields'
+_type = 'type'
+_zero_term_query = 'zero_term_query'
+_cutoff_frequency = 'cutoff_frequency'
+_rewrite = 'rewrite'
 
 class FullTextQuery():
 
@@ -161,19 +165,64 @@ class FullTextQuery():
         return self.query
 
 
-    def multi_match(self, fields:list(), search, operator=None, zero_term_query=None, cutoff_frequency=None, boost=None, rewrite=None,
+    def multi_match(self, fields:list(), search, type=None, operator=None, zero_term_query=None, cutoff_frequency=None, boost=None, rewrite=None,
                                 prefix_length=None, fuzziness=None, minimum_should_match=None, analyzer=None, max_expansions=None):
         """
         match 쿼리의 다중 필드 버전
         """
+
+        self.query[_multi_match] = dict()
+
+        self.query[_multi_match][_fields] = fields
+        self.query[_multi_match][_query] = search
+
+        # multi_match field type (best_fileds, most_fileds, cross_fileds, phrase, phrase_prefix, bool_prefix)
+        if type != None:
+            self.query[_multi_match][_type] = type
+
+        if operator != None:
+            self.query[_multi_match][_operator] = operator
+
+        if zero_term_query != None:
+            self.query[_multi_match][_zero_term_query] = zero_term_query
+
+        if cutoff_frequency != None:
+            self.query[_multi_match][_cutoff_frequency] = cutoff_frequency
+
+        if boost != None:
+            self.query[_multi_match][_boost] = boost
+
+        if rewrite != None:
+            self.query[_multi_match][_rewrite] = rewrite
+
+        if prefix_length != None:
+            self.query[_multi_match][_prefix_length] = prefix_length
+
+        if fuzziness != None:
+            self.query[_multi_match][_fuzziness] = fuzziness
+
+        if minimum_should_match != None:
+            self.query[_multi_match][_minimum_should_match] = minimum_should_match
+
+        if analyzer != None:
+            self.query[_multi_match][_analyzer] = analyzer
+
+        if max_expansions != None:
+            self.query[_multi_match][_max_expansions] = max_expansions
+
+        return self.query
+
+
+
+
+
+
+
+
+
+
+
+
+
         pass
 
-    def common(self):
-        """
-        Deprecated 7.3
-        Document 에서 자주 사용되는 단어를 제외하고, 의미있는 단어만 검색하기 위해서 사용하는 쿼리
-        cutoff_frequency 옵션을 사용하여, 특정 빈도 보다 많은 단어를 제외하고 검색할 수 있다.
-        """
-        pass
-
-    
