@@ -212,17 +212,3 @@ class FullTextQuery():
 
         return self.query
 
-
-
-
-
-
-
-
-
-
-
-
-
-        pass
-

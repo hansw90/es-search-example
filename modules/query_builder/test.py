@@ -1,3 +1,6 @@
+def bool_query_test():
+    pass
+
 
 
 if __name__ == 'main': 
