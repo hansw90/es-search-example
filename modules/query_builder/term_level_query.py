@@ -109,10 +109,6 @@ class TermQuery(object):
 
         return self.query
 
-    def missing(self, field):
-        """
-        검색하고자 하는 필드에 값이 없는지 확인
-        """
 
 
     def prefix(self, field, value):
