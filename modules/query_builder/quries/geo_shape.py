@@ -26,3 +26,5 @@ class GeoShape(object):
     def build(self):
         self._query['geo_shage'][self.field]['shape']['coordinates'] = self.cordinates
         return self._query
+
+
