@@ -8,7 +8,6 @@ _lt = 'llt'
 _timezone = 'timezone'
 _format = 'format'
 
-
 class Range(object):
     """
     검색 하고자 하는 필드에서 입력한 범위에 포험되는 날짜나, 숫자, 문자열등을 검색할 때 사용

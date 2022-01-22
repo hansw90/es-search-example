@@ -1,6 +1,3 @@
-from re import L
-
-
 _term = 'term'
 _value = 'value'
 _boost = 'boost'
@@ -12,7 +9,7 @@ class Term(object):
     term query
     검색하고자 하는 필드에 정확한 텀을 포함하고 있는지 확인하는 쿼리
     """
-    
+
     def __init__(self, field, value):
         self.query = dict() 
         self.query[_term][field][_value] = value
