@@ -5,7 +5,6 @@ class TermQuery(object):
     def __init__(self):
         self.query = dict()
     
-
     def term(self):
         return term.Term()
 

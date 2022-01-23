@@ -20,7 +20,6 @@ class GeoQuery(object):
       return geo_shape.GeoShape()
 
 
-
 if __name__ == '__main__': 
    q = GeoQuery()
    q = q.geo_bounding_box(field='aa').top_left(11).bottom_right(22).build()
