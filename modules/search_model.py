@@ -1,4 +1,5 @@
 import json
+from urllib import request
 import requests
 
 import modules.utils.es_utils as esutils
@@ -15,6 +16,9 @@ class SearchModel(object):
         self.doc = "/_doc"
         self.search= "/_search"
         self.update = "/update"
+        self.delete = "/delete"
+        self.delete_by_query = "/delete_by_query"
+        self._analyze = "_analyze"
     
     
     def get_docs_by_id(self, index, id, body):
@@ -69,17 +73,39 @@ class SearchModel(object):
         """
         docs를 제거한다.
         """
+        es_url = f"{self.es_url}{index}{self.doc}/{id}"
+        es_result = requests.delete(
+            url = es_url,
+            headers=self.default_headers
+        )
+        return es_result
+        
 
-    def delete_by_query(self, index, query):
+    def delete_query(self, index, query):
         """
         query를 통해 docs들을 제거한다.
         """
+        es_url = f"{self.es_url}{index}{self.delete_by_query}"
+        es_result = requests.post(
+                    url=es_url
+                    , headers=self.default_headers
+                    , data=query
+                    )
+        return es_result
 
-    def analyze(self, index, query):
+    def analyze(self, query):
         """
         query를 분석한다.
         """
-        pass
+        es_url = f"{self.es_url}{self._analyze}"
+        es_result = requests.get(
+            url = es_url
+            , headers=self.default_headers
+            , data=query
+        )
+        
+        return es_result
+
 
 
 
