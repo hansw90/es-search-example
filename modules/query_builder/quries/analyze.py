@@ -23,6 +23,10 @@ class Analyze(object):
         self._filter = values
         return self
 
+    def explain(self, value):
+        self.query["explain"] = value
+        return self
+
     def build(self):
         if  self._filter != None:
             self.texts = ' '.join(self.texts)
