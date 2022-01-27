@@ -1,5 +1,4 @@
 import sys, os
-from telnetlib import COM_PORT_OPTION
 sys.path.append(os.getcwd()+"/quries")
 
 from term_level_query import TermQuery
