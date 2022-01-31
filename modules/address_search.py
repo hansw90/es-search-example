@@ -16,12 +16,6 @@ class AddressSearch(object):
         도로명/법정동/행정동 맵정보에서 네임을 통해 값을 가져온다.
         """
 
-    def split_keywords(self, keywords):
-        """
-        키워드를 분리한다.
-        """
-        keyword_list = keywords.split("\t")
-
     def find_dong_and_road(self, address):
         """
         주소 정보를 통해 도로명/법정동/행정동 명을 가져온다.
@@ -41,4 +35,10 @@ class AddressSearch(object):
         """
         법정동 주소를 통해 pnu 코드를 얻는다.
         """
+
+    def split_keywords(self, keywords):
+        """
+        키워드를 분리한다.
+        """
+        keyword_list = keywords.split("\t")
 
