@@ -4,14 +4,15 @@ import requests
 
 import modules.utils.es_utils as esutils
 
-class SearchModel(object):
+class ElasticApi(object):
 
-    def __init__(self):
-        self.url = "http://office.leevi.co.kr:45501/"
-        self.security_token = "elastic:parrot@"
-        self.address_index = "/parrot_address"
+    def __init__(self, es_model):
+        self.http_method = "http://"
+        print(es_model)
+        self.url = es_model['url']
+        self.security_token = es_model['security_token']
         self.default_headers = {'Content-Type': 'application/json; charset=utf-8'}
-        self.es_url = self.security_token+self.url
+        self.es_url = self.http_method+self.security_token+self.url
 
         self.doc = "/_doc"
         self.search= "/_search"
@@ -19,6 +20,7 @@ class SearchModel(object):
         self.delete = "/delete"
         self.delete_by_query = "/delete_by_query"
         self._analyze = "_analyze"
+        self.cat ="/_cat"
     
     
     def get_docs_by_id(self, index, id, body):
@@ -107,6 +109,29 @@ class SearchModel(object):
         return es_result
 
 
+    def get_health(self):
+        """
+        Elastic health checking
+        """
+        es_url = f"{self.es_url}{self.cat}/health?v"
+        es_result = requests.get(
+            url = es_url
+            , headers=self.default_headers
+        )
+
+        return es_result
+
+    def get_node(self):
+        """
+        Elastic health checking
+        """
+        es_url = f"{self.es_url}{self.cat}/node?v"
+        es_result = requests.get(
+            url = es_url
+            , headers=self.default_headers
+        )
+
+        return es_result
 
 
 # 주소 검색 예제 프로젝트

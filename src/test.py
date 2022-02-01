@@ -1,5 +1,11 @@
 import sys, os
+
+sys.path.append(os.getcwd())
 sys.path.append(os.getcwd()+"/src")
+sys.path.append(os.getcwd()+"/modules/tools")
+
+import requests
+from modules.tools import es_api
 
 class Tester(object):
 
@@ -27,9 +33,22 @@ class Tester(object):
         print(line)
 
 
+
+
 if __name__ == "__main__":
 
-    test = Tester()
-    file_name = "test.csv"
-    file_path = os.path.join(os.getcwd()+"/src", file_name)
-    test.read_file(file_path)
+    es_model = dict()
+    es_model['url'] = "localhost:9200"
+    es_model['security_token'] = ""
+    
+    api = es_api.ElasticApi(es_model)
+    es_health = api.get_health()
+    print(es_health)
+    print(es_health.text)
+
+    # test = Tester()
+    # file_name = "test.csv"
+    # file_path = os.path.join(os.getcwd()+"/src", file_name)
+    # test.read_file(file_path)
+
+
