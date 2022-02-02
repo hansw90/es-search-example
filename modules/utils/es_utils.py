@@ -12,3 +12,4 @@ def del_none(d):
         elif isinstance(value, dict):
             del_none(value)
     return d  # For convenience
+
