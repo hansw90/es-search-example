@@ -64,6 +64,10 @@ docker/jupyter/migrated
 *.tar
 *.tar.gz*
 *.z*
+*.txt
+*.csv
+store_seoul_dump.json
+
 
 Untitled.*
 *trash

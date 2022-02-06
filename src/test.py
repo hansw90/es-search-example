@@ -3,9 +3,13 @@ import sys, os
 sys.path.append(os.getcwd())
 sys.path.append(os.getcwd()+"/src")
 sys.path.append(os.getcwd()+"/modules/tools")
+sys.path.append(os.getcwd()+"/modules/data")
 
 import requests
 from modules.tools import es_api
+from data import jibun_seoul, road_seoul
+from itertools import chain
+from collections import defaultdict
 
 class Tester(object):
 
@@ -32,9 +36,6 @@ class Tester(object):
         
         print(line)
 
-
-
-
 if __name__ == "__main__":
 
     es_model = dict()
@@ -43,12 +44,20 @@ if __name__ == "__main__":
     
     api = es_api.ElasticApi(es_model)
     es_health = api.get_health()
-    print(es_health)
-    print(es_health.text)
+    
 
     # test = Tester()
     # file_name = "test.csv"
     # file_path = os.path.join(os.getcwd()+"/src", file_name)
     # test.read_file(file_path)
 
+    seoul_jibuns = jibun_seoul.get_all_jibun(path="./data/")
+    seoul_roads = road_seoul.get_all_road(path="./data/")
+    
+    seoul_addresses = defaultdict(list)
+    for k, v in chain(seoul_jibuns.items(), seoul_roads.items()):
+        seoul_addresses[k].append(v)
 
+    print(seoul_addresses['청운동'])
+    
+    print(seoul_addresses['창경궁로'])
